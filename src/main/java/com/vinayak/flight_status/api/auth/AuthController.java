@@ -1,6 +1,7 @@
 package com.vinayak.flight_status.api.auth;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,12 +34,25 @@ public class AuthController {
     @PostMapping("login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody Users users) {
 
-        AuthenticationResponse signup = authService.login(users);
+        AuthenticationResponse login = authService.login(users);
 
-        if (signup == null) {
+        if (login == null) {
             return ResponseEntity.internalServerError().build();
         }
 
-        return ResponseEntity.ok().body(signup);
+        return ResponseEntity.ok().body(login);
     }
+
+    @PostMapping("verifyToken")
+    public ResponseEntity<AuthenticationResponse> verifyToken(String token) {
+
+        AuthenticationResponse verifyToken = authService.verifyToken(token);
+
+        if (verifyToken == null) {
+            return ResponseEntity.internalServerError().build();
+        }
+
+        return ResponseEntity.ok().body(verifyToken);
+    }
+
 }

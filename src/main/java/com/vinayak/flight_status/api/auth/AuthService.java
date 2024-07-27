@@ -47,4 +47,16 @@ public class AuthService {
         return AuthenticationResponse.builder().token(jwtToken).user(new UsersResponseDto(user)).build();
     }
 
+    public AuthenticationResponse verifyToken(String token) {
+
+        Users user = usersRepository
+                .findByEmail(jwtService.extractUsername(token))
+                .orElseThrow();
+        if (jwtService.isTokenValid(token, user)) {
+            return AuthenticationResponse.builder().token(token).user(new UsersResponseDto(user)).build();
+        }
+        return null;
+
+    }
+
 }
