@@ -15,6 +15,7 @@ import com.vinayak.flight_status.ticket.TicketCompositeKey;
 import com.vinayak.flight_status.ticket.TicketRepository;
 import com.vinayak.flight_status.users.Users;
 import com.vinayak.flight_status.users.UsersRepository;
+import com.vinayak.flight_status.users.UsersRole;
 
 @SpringBootApplication
 public class FlightStatusApplication {
@@ -64,5 +65,24 @@ public class FlightStatusApplication {
             }
         };
     }
+
+	// @Bean
+	@Autowired
+	public CommandLineRunner mydata(
+		UsersRepository usersRepository
+	){
+
+		return args -> {
+
+			Users users = Users.builder()
+					.fullName("Vinayak Agarwal")
+					.email("vinayakaggarwal05@gmail.com")
+					.password("qwerty12345")
+					.role(UsersRole.ADMIN)
+					.build();
+
+			usersRepository.save(users);
+		};
+	}
 
 }
