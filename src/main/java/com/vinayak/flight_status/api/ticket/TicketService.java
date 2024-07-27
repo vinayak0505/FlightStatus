@@ -1,6 +1,7 @@
 package com.vinayak.flight_status.api.ticket;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,10 @@ public class TicketService {
     }
 
     public Ticket createTicket(Ticket ticket) {
+        Optional<Ticket> byId = ticketRepository.findById(new TicketCompositeKey(ticket));
+        if(byId.isPresent()) {
+            return null;
+        }
         return ticketRepository.save(ticket);
     }
 

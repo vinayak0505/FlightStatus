@@ -47,6 +47,11 @@ public class TicketController {
         Users user = usersService.getUser(name);
 
         Ticket entity = ticketService.createTicket(new Ticket(ticket, user.getId()));
+
+        if(entity == null){
+            return ResponseEntity.badRequest().build();
+        }
+        
         Optional<Flight> flight = flightService.getFlight(entity.getFlight().getId());
 
         if (!flight.isPresent()) {

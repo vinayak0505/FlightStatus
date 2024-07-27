@@ -18,6 +18,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class TicketCompositeKey implements Serializable {
 
+    public TicketCompositeKey(Ticket ticket) {
+        this.flight = ticket.getFlight();
+        this.userId = ticket.getUserId();
+        this.seatNumber = ticket.getSeatNumber();
+    }
+
     @ManyToOne
     private Flight flight;
 
