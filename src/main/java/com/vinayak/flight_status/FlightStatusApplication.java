@@ -11,7 +11,6 @@ import com.github.javafaker.Faker;
 import com.vinayak.flight_status.api.flight.Flight;
 import com.vinayak.flight_status.api.flight.FlightRepository;
 import com.vinayak.flight_status.api.ticket.Ticket;
-import com.vinayak.flight_status.api.ticket.TicketCompositeKey;
 import com.vinayak.flight_status.api.ticket.TicketRepository;
 import com.vinayak.flight_status.api.users.Users;
 import com.vinayak.flight_status.api.users.UsersRepository;
@@ -53,12 +52,9 @@ public class FlightStatusApplication {
 
                 flightRepository.save(flight);
 
-                var ticket = Ticket.builder().id(
-                        TicketCompositeKey.builder()
-                                .flight(Flight.builder().id(flight.getId()).build())
-                                .userId(users.getId())
-                                .seatNumber(faker.number().numberBetween(0, flight.getSeatCount()))
-                                .build())
+                var ticket = Ticket.builder().flight(Flight.builder().id(flight.getId()).build())
+                        .userId(users.getId())
+                        .seatNumber(faker.number().numberBetween(0, flight.getSeatCount()))
                         .build();
 
                 ticketRepository.save(ticket);
@@ -66,23 +62,23 @@ public class FlightStatusApplication {
         };
     }
 
-	// @Bean
-	@Autowired
-	public CommandLineRunner mydata(
-		UsersRepository usersRepository
-	){
+    // @Bean
+    @Autowired
+    public CommandLineRunner mydata(
+            UsersRepository usersRepository
+    ) {
 
-		return args -> {
+        return args -> {
 
-			Users users = Users.builder()
-					.fullName("Vinayak Agarwal")
-					.email("vinayakaggarwal05@gmail.com")
-					.password("qwerty12345")
-					.role(UsersRole.ADMIN)
-					.build();
+            Users users = Users.builder()
+                    .fullName("Vinayak Agarwal")
+                    .email("vinayakaggarwal05@gmail.com")
+                    .password("qwerty12345")
+                    .role(UsersRole.ADMIN)
+                    .build();
 
-			usersRepository.save(users);
-		};
-	}
+            usersRepository.save(users);
+        };
+    }
 
 }
