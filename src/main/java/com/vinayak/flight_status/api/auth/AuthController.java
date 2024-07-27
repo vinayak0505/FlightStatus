@@ -31,12 +31,12 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody Users users) {
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody Users users) {
         AuthenticationResponse login = authService.login(users);
         if (login == null) {
             return ResponseEntity.internalServerError().build();
         }
-        return ResponseEntity.ok("hello");
+        return ResponseEntity.ok(login);
     }
 
     @PostMapping("verifyToken")
