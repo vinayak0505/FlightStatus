@@ -1,4 +1,4 @@
-package com.vinayak.flight_status.users;
+package com.vinayak.flight_status.api.users;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

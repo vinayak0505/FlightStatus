@@ -1,4 +1,4 @@
-package com.vinayak.flight_status.flight;
+package com.vinayak.flight_status.api.flight;
 
 import java.net.URI;
 import java.util.List;

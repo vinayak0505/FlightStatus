@@ -1,8 +1,8 @@
-package com.vinayak.flight_status.ticket;
+package com.vinayak.flight_status.api.ticket;
 
 import java.io.Serializable;
 
-import com.vinayak.flight_status.flight.Flight;
+import com.vinayak.flight_status.api.flight.Flight;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.ManyToOne;

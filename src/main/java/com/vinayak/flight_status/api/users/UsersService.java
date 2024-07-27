@@ -1,4 +1,4 @@
-package com.vinayak.flight_status.users;
+package com.vinayak.flight_status.api.users;
 
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class UsersService {
     }
 
     public Users getUser(String email) {
-        return usersRepository.findByEmail(email.toLowerCase());
+        return usersRepository.findByEmail(email.toLowerCase()).orElse(null);
     }
 
     public Users createUser(Users users) {
@@ -22,5 +22,9 @@ public class UsersService {
 
     public boolean isAdmin(String email) {
         return getUser(email.toLowerCase()).getRole() == UsersRole.ADMIN;
+    }
+
+    public Users loadUserByUsername(String userEmail) {
+        return usersRepository.findByEmail(userEmail.toLowerCase()).orElse(null);
     }
 }

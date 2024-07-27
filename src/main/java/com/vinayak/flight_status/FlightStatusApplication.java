@@ -8,14 +8,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.github.javafaker.Faker;
-import com.vinayak.flight_status.flight.Flight;
-import com.vinayak.flight_status.flight.FlightRepository;
-import com.vinayak.flight_status.ticket.Ticket;
-import com.vinayak.flight_status.ticket.TicketCompositeKey;
-import com.vinayak.flight_status.ticket.TicketRepository;
-import com.vinayak.flight_status.users.Users;
-import com.vinayak.flight_status.users.UsersRepository;
-import com.vinayak.flight_status.users.UsersRole;
+import com.vinayak.flight_status.api.flight.Flight;
+import com.vinayak.flight_status.api.flight.FlightRepository;
+import com.vinayak.flight_status.api.ticket.Ticket;
+import com.vinayak.flight_status.api.ticket.TicketCompositeKey;
+import com.vinayak.flight_status.api.ticket.TicketRepository;
+import com.vinayak.flight_status.api.users.Users;
+import com.vinayak.flight_status.api.users.UsersRepository;
+import com.vinayak.flight_status.api.users.UsersRole;
 
 @SpringBootApplication
 public class FlightStatusApplication {

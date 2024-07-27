@@ -1,4 +1,4 @@
-package com.vinayak.flight_status.ticket;
+package com.vinayak.flight_status.api.ticket;
 
 import java.sql.Date;
 
