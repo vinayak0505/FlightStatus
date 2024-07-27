@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.session.SessionManagementFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,18 +22,20 @@ public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {"/auth/**"};
     private final JwtAuthenticationFilter jwtAuthFilter;
+    private final CustomCorsFilter customCorsFilter;
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .addFilterBefore(customCorsFilter, SessionManagementFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req ->
-                        req.requestMatchers(WHITE_LIST_URL)
-                                .permitAll()
-                                // .requestMatchers("/api/users/**").hasRole(UsersRole.ADMIN.name())
-                                .anyRequest()
-                                .authenticated()
+                .authorizeHttpRequests(req
+                        -> req.requestMatchers(WHITE_LIST_URL)
+                        .permitAll()
+                        // .requestMatchers("/api/users/**").hasRole(UsersRole.ADMIN.name())
+                        .anyRequest()
+                        .authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
@@ -40,4 +43,5 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+
 }
