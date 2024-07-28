@@ -3,6 +3,7 @@ package com.vinayak.flight_status.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.PUT;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +15,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.vinayak.flight_status.api.users.UsersRole;
 
 import lombok.RequiredArgsConstructor;
 
@@ -59,6 +62,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req -> req
                 .requestMatchers(WHITE_LIST_URL).permitAll()
                 .requestMatchers(GET, "/flights").permitAll()
+                .requestMatchers(PUT, "/flights/**").hasAuthority(UsersRole.ADMIN.name())
                 // .requestMatchers("/api/users/**").hasRole(UsersRole.ADMIN.name())
                 .anyRequest().authenticated()
                 )

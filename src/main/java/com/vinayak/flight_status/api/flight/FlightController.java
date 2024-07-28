@@ -69,16 +69,15 @@ public class FlightController {
     
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateFlight(@PathVariable int id, @RequestBody Flight flight) {
+    public ResponseEntity<Flight> updateFlightStatus(@PathVariable int id, @RequestBody UpdateFlightStatusRequestDto flight) {
         
-        flight.setId(id);
-        Flight dbFlight = flightService.updateFlight(flight);
+        Flight dbFlight = flightService.updateFlight(id, flight);
 
         if(dbFlight == null){
             return ResponseEntity.internalServerError().build();
         }
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(dbFlight);
     }
 
 }
