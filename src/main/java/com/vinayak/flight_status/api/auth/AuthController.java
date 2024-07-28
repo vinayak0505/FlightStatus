@@ -40,7 +40,7 @@ public class AuthController {
     }
 
     @PostMapping("verifyToken")
-    public ResponseEntity<AuthenticationResponse> verifyToken(String token) {
+    public ResponseEntity<AuthenticationResponse> verifyToken(@RequestBody String token) {
 
         AuthenticationResponse verifyToken = authService.verifyToken(token);
 

@@ -18,6 +18,7 @@ public class FlightService {
 
     public List<Flight> getAllFlighs() {
         var now = new Date();
+        //TODO remove and add new data;
         Calendar calaender = Calendar.getInstance();
         calaender.setTime(now);
         calaender.set(Calendar.MONTH, 1);

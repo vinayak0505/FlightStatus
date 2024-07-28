@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import static org.springframework.http.HttpMethod.GET;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,14 +16,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 import lombok.RequiredArgsConstructor;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-    private static final String[] WHITE_LIST_URL = {"/auth/**"};
+    private static final String[] WHITE_LIST_URL = {
+        "/auth/**",
+    };
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
@@ -40,11 +42,10 @@ public class SecurityConfiguration {
         ))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req
-                        -> req.requestMatchers(WHITE_LIST_URL)
-                        .permitAll()
+                        -> req.requestMatchers(WHITE_LIST_URL).permitAll()
+                        .requestMatchers(GET,"/flights").permitAll()
                         // .requestMatchers("/api/users/**").hasRole(UsersRole.ADMIN.name())
-                        .anyRequest()
-                        .authenticated()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
