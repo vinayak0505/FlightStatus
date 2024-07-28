@@ -61,7 +61,7 @@ public class TicketController {
         return ResponseEntity.ok(entity);
     }
 
-    @GetMapping("/flight/{id}")
+    @GetMapping("flight/{id}")
     public ResponseEntity<List<Integer>> getBookedSeatsByFlights(@PathVariable("id") int flightId) {
         List<Integer> tickets = ticketService.getBookedSeatsByFlightId(flightId);
         return ResponseEntity.ok(tickets);

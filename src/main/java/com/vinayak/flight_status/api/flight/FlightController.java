@@ -2,6 +2,7 @@ package com.vinayak.flight_status.api.flight;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,17 @@ public class FlightController {
         List<Flight> allFlighs = flightService.getAllFlighs();
 
         return ResponseEntity.ok().body(allFlighs);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Flight> getFlight(@PathVariable int id) {
+        
+        Optional<Flight> flight = flightService.getFlight(id);
+        if(flight == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(flight.get());
     }
 
     // @GetMapping("/{id}")

@@ -48,6 +48,7 @@ public class FlightStatusApplication {
                         .seatCount(faker.number().numberBetween(100, 200))
                         .arrivalDate(faker.date().future(10, TimeUnit.DAYS))
                         .gateNumber(faker.number().numberBetween(0, 10) + "_gate")
+                        .price(faker.number().numberBetween(1000, 10000))
                         .build();
 
                 flightRepository.save(flight);

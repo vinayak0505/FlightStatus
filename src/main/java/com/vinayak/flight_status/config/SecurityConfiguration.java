@@ -1,7 +1,5 @@
 package com.vinayak.flight_status.config;
 
-import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import static org.springframework.http.HttpMethod.GET;
@@ -14,8 +12,11 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import lombok.RequiredArgsConstructor;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -23,29 +24,43 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {
-        "/auth/**",
-    };
+        "/auth/**",};
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
+    public WebMvcConfigurer corsConfigurer() {
+
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry
+                        .addMapping("/**")
+                        .allowedMethods(CorsConfiguration.ALL)
+                        .allowedHeaders(CorsConfiguration.ALL)
+                        .allowedOriginPatterns(CorsConfiguration.ALL);
+            }
+        };
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(corsCustomizer -> corsCustomizer.configurationSource(
-                request -> {
-                    var cors = new CorsConfiguration();
-                    cors.setAllowedOrigins(List.of("*"));
-                    cors.setAllowedMethods(List.of("*"));
-                    cors.setAllowedHeaders(List.of("*"));
-                    return cors;
-                }
-        ))
+                //         .cors(corsCustomizer -> corsCustomizer.configurationSource(
+                //         request -> {
+                //             var cors = new CorsConfiguration();
+                //             cors.setAllowedOrigins(List.of("*"));
+                //             cors.setAllowedMethods(List.of("*"));
+                //             cors.setAllowedHeaders(List.of("*"));
+                //             return cors;
+                //         }
+                // ))
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req
-                        -> req.requestMatchers(WHITE_LIST_URL).permitAll()
-                        .requestMatchers(GET,"/flights").permitAll()
-                        // .requestMatchers("/api/users/**").hasRole(UsersRole.ADMIN.name())
-                        .anyRequest().authenticated()
+                .authorizeHttpRequests(req -> req
+                .requestMatchers(WHITE_LIST_URL).permitAll()
+                .requestMatchers(GET, "/flights").permitAll()
+                // .requestMatchers("/api/users/**").hasRole(UsersRole.ADMIN.name())
+                .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)

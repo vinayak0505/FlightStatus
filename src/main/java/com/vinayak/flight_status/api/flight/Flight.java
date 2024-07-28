@@ -53,4 +53,6 @@ public class Flight {
     private String gateNumber;
 
     private Integer seatCount;
+
+    private Integer price;
 }
