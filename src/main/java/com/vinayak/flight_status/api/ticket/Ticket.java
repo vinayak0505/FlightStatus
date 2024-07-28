@@ -1,11 +1,12 @@
 package com.vinayak.flight_status.api.ticket;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.vinayak.flight_status.api.flight.Flight;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -40,5 +41,6 @@ public class Ticket {
     private Integer seatNumber;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private Date createdAt;
 }
