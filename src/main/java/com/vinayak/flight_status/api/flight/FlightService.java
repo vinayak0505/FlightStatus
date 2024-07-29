@@ -33,15 +33,28 @@ public class FlightService {
         return flightRepository.findById(id);
     }
 
-    public Flight updateFlight(Integer flightId,UpdateFlightStatusRequestDto updateFlight) {
-        if(flightId == null || updateFlight == null || updateFlight.getFlightStatus() == null){
+    public Flight updateFlight(Integer flightId, UpdateFlightStatusRequestDto updateFlight) {
+        if (flightId == null || updateFlight == null || updateFlight.getFlightStatus() == null) {
             return null;
         }
         Flight flight = flightRepository.findById(flightId).orElse(null);
-        if(flight == null){
+        if (flight == null) {
             return null;
         }
         flight.setFlightStatus(updateFlight.getFlightStatus());
+        Flight save = flightRepository.save(flight);
+        return save;
+    }
+
+    public Flight updateGate(Integer flightId, String gateId) {
+        if (flightId == null || gateId == null) {
+            return null;
+        }
+        Flight flight = flightRepository.findById(flightId).orElse(null);
+        if (flight == null) {
+            return null;
+        }
+        flight.setGateNumber(gateId);
         Flight save = flightRepository.save(flight);
         return save;
     }

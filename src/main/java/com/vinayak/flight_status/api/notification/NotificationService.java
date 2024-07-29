@@ -53,4 +53,9 @@ public class NotificationService {
         firebaseService.sendFlightStatus(NotificationType.SFLIGHT,Notification.getChannelName(flightId), flightStatus, flightId);
         firebaseService.sendFlightStatus(NotificationType.ALLFLIGHT,Notification.getAllFlightChangeName(), flightStatus, flightId);
     }
+
+    public void flightGateUpdated(Integer flightId, String gateId) {
+        firebaseService.sendFlightGate(NotificationType.SGATE,Notification.getChannelName(flightId), gateId, flightId);
+        firebaseService.sendFlightGate(NotificationType.ALLGATE,Notification.getAllFlightChangeName(), gateId, flightId);
+    }
 }

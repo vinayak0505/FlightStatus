@@ -86,4 +86,17 @@ public class FlightController {
         return ResponseEntity.ok().body(dbFlight);
     }
 
+    @PutMapping("gate/{id}")
+    public ResponseEntity<Flight> updateFlightGate(@PathVariable int id, @RequestBody UpdateFlightGateRequestDto gate) {
+        Flight dbFlight = flightService.updateGate(id, gate.getGateNumber());
+
+        if(dbFlight == null){
+            return ResponseEntity.internalServerError().build();
+        }
+
+        notificationService.flightGateUpdated(id, dbFlight.getGateNumber());
+
+        return ResponseEntity.ok().body(dbFlight);
+    }
+
 }

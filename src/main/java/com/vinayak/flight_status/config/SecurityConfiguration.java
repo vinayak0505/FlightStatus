@@ -49,15 +49,6 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                //         .cors(corsCustomizer -> corsCustomizer.configurationSource(
-                //         request -> {
-                //             var cors = new CorsConfiguration();
-                //             cors.setAllowedOrigins(List.of("*"));
-                //             cors.setAllowedMethods(List.of("*"));
-                //             cors.setAllowedHeaders(List.of("*"));
-                //             return cors;
-                //         }
-                // ))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
                 .requestMatchers(WHITE_LIST_URL).permitAll()
