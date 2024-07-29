@@ -46,16 +46,6 @@ public class FlightController {
         return ResponseEntity.ok().body(flight.get());
     }
 
-    // @GetMapping("/{id}")
-    // public ResponseEntity<List<Flight>> getAllFlightByUserId(@PathVariable int id) {
-    //     Flight flight = flightService.getFlight(id).orElse(null);
-    //     if(flight == null)
-    //         return ResponseEntity.notFound().build();
-    //     return ResponseEntity.ok().body(flight);
-    //     TODO: not implemented
-    //     return ResponseEntity.badRequest().build();
-    // }
-
     @PostMapping("")
     public ResponseEntity<Void> postFlight(@RequestBody Flight flight) {
 
@@ -81,6 +71,7 @@ public class FlightController {
             return ResponseEntity.internalServerError().build();
         }
 
+        //TODO add a job
         notificationService.flightStatusUpdated(id, dbFlight.getFlightStatus());
 
         return ResponseEntity.ok().body(dbFlight);
@@ -94,6 +85,7 @@ public class FlightController {
             return ResponseEntity.internalServerError().build();
         }
 
+        //TODO add a job
         notificationService.flightGateUpdated(id, dbFlight.getGateNumber());
 
         return ResponseEntity.ok().body(dbFlight);

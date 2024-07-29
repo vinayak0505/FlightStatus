@@ -5,10 +5,13 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.vinayak.flight_status.api.email.EmailDetails;
 import com.vinayak.flight_status.api.email.EmailService;
 import com.vinayak.flight_status.api.flight.FlightStatus;
 import com.vinayak.flight_status.api.messaging.FirebaseService;
 import com.vinayak.flight_status.api.messaging.SubscriptionService;
+import com.vinayak.flight_status.api.ticket.Ticket;
+import com.vinayak.flight_status.api.ticket.TicketRepository;
 
 @Service
 public class NotificationService {
@@ -17,12 +20,14 @@ public class NotificationService {
     final private SubscriptionService subscriptionService;
     final private FirebaseService firebaseService;
     final private EmailService emailService;
+    final private TicketRepository ticketRepository;
 
-    public NotificationService(NotificationRepository notificationRepository, SubscriptionService subscriptionService, FirebaseService firebaseService, EmailService emailService) {
+    public NotificationService(NotificationRepository notificationRepository, SubscriptionService subscriptionService, FirebaseService firebaseService, EmailService emailService, TicketRepository ticketRepository) {
         this.notificationRepository = notificationRepository;
         this.subscriptionService = subscriptionService;
         this.firebaseService = firebaseService;
         this.emailService = emailService;
+        this.ticketRepository = ticketRepository;
     }
 
     public void saveMessagingToken(Integer userId, String firebase_token) {
@@ -53,12 +58,34 @@ public class NotificationService {
     }
 
     public void flightStatusUpdated(Integer flightId, FlightStatus flightStatus) {
-        firebaseService.sendFlightStatus(NotificationType.SFLIGHT,Notification.getChannelName(flightId), flightStatus, flightId);
-        firebaseService.sendFlightStatus(NotificationType.ALLFLIGHT,Notification.getAllFlightChangeName(), flightStatus, flightId);
+        firebaseService.sendFlightStatus(NotificationType.SFLIGHT, Notification.getChannelName(flightId), flightStatus, flightId);
+        firebaseService.sendFlightStatus(NotificationType.ALLFLIGHT, Notification.getAllFlightChangeName(), flightStatus, flightId);
+        List<Ticket> allByFlightId = ticketRepository.findAllByFlightId(flightId);
+
+        for (Ticket ticket : allByFlightId) {
+            emailService.sendSimpleMail(
+                    EmailDetails.builder()
+                            .recipient(ticket.getUsers().getEmail())
+                            .subject("Flight Status Updated")
+                            .msgBody("Flight Status update for flight " + flightId + " with status " + flightStatus)
+                            .build()
+            );
+        }
     }
 
     public void flightGateUpdated(Integer flightId, String gateId) {
-        firebaseService.sendFlightGate(NotificationType.SGATE,Notification.getChannelName(flightId), gateId, flightId);
-        firebaseService.sendFlightGate(NotificationType.ALLGATE,Notification.getAllFlightChangeName(), gateId, flightId);
+        firebaseService.sendFlightGate(NotificationType.SGATE, Notification.getChannelName(flightId), gateId, flightId);
+        firebaseService.sendFlightGate(NotificationType.ALLGATE, Notification.getAllFlightChangeName(), gateId, flightId);
+        List<Ticket> allByFlightId = ticketRepository.findAllByFlightId(flightId);
+
+        for (Ticket ticket : allByFlightId) {
+            emailService.sendSimpleMail(
+                    EmailDetails.builder()
+                            .recipient(ticket.getUsers().getEmail())
+                            .subject("Your Gate Number changed")
+                            .msgBody("Your Gate Number changed to " + gateId + " for flight " + flightId)
+                            .build()
+            );
+        }
     }
 }

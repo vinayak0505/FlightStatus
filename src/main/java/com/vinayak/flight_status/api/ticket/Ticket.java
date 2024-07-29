@@ -5,6 +5,7 @@ import java.util.Date;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.vinayak.flight_status.api.flight.Flight;
+import com.vinayak.flight_status.api.users.Users;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +27,7 @@ public class Ticket {
 
     public Ticket(BuyTicketRequestDto ticket, Integer userId) {
         this.flight = Flight.builder().id(ticket.getFlightId()).build();
-        this.userId = userId;
+        this.users = Users.builder().id(userId).build();
         this.seatNumber = ticket.getSeatNumber();
     }
 
@@ -35,7 +36,8 @@ public class Ticket {
     private Flight flight;
 
     @Id
-    private Integer userId;
+    @ManyToOne
+    private Users users;
 
     @Id
     private Integer seatNumber;

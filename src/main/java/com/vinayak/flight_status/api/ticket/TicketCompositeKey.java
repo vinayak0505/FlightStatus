@@ -3,6 +3,7 @@ package com.vinayak.flight_status.api.ticket;
 import java.io.Serializable;
 
 import com.vinayak.flight_status.api.flight.Flight;
+import com.vinayak.flight_status.api.users.Users;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.ManyToOne;
@@ -20,14 +21,15 @@ public class TicketCompositeKey implements Serializable {
 
     public TicketCompositeKey(Ticket ticket) {
         this.flight = ticket.getFlight();
-        this.userId = ticket.getUserId();
+        this.users = ticket.getUsers();
         this.seatNumber = ticket.getSeatNumber();
     }
 
     @ManyToOne
     private Flight flight;
 
-    private Integer userId;
+    @ManyToOne
+    private Users users;
 
     private Integer seatNumber;
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, TicketCompositeKey> {
 
-    List<Ticket> findAllByUserId(Integer id);
+    List<Ticket> findAllByUsersId(Integer id);
 
     List<Ticket> findAllByFlightId(Integer flightId);
     

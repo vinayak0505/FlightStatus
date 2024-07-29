@@ -56,7 +56,7 @@ public class FlightStatusApplication {
                 flightRepository.save(flight);
 
                 var ticket = Ticket.builder().flight(Flight.builder().id(flight.getId()).build())
-                        .userId(users.getId())
+                        .users(users)
                         .seatNumber(faker.number().numberBetween(0, flight.getSeatCount()))
                         .build();
 

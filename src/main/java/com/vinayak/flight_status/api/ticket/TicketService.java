@@ -15,7 +15,7 @@ public class TicketService {
     }
 
     public List<Ticket> getTicketsByUser(Integer id) {
-        List<Ticket> allByUserId = ticketRepository.findAllByUserId(id);
+        List<Ticket> allByUserId = ticketRepository.findAllByUsersId(id);
         return allByUserId;
     }
 
