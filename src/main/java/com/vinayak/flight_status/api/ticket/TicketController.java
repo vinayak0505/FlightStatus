@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vinayak.flight_status.api.flight.Flight;
 import com.vinayak.flight_status.api.flight.FlightService;
+import com.vinayak.flight_status.api.notification.NotificationService;
 import com.vinayak.flight_status.api.users.Users;
 import com.vinayak.flight_status.api.users.UsersService;
 
@@ -24,11 +25,13 @@ public class TicketController {
     final private TicketService ticketService;
     final private UsersService usersService;
     final private FlightService flightService;
+    final private NotificationService notificationService;
 
-    public TicketController(TicketService ticketService, UsersService usersService, FlightService flightService) {
+    public TicketController(TicketService ticketService, UsersService usersService, FlightService flightService, NotificationService notificationService) {
         this.ticketService = ticketService;
         this.usersService = usersService;
         this.flightService = flightService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("")
@@ -57,6 +60,8 @@ public class TicketController {
         if (!flight.isPresent()) {
             return ResponseEntity.notFound().build();
         }
+
+        notificationService.saveTicketToNotification(user.getId(), flight.get().getId());
         entity.setFlight(flight.get());
         return ResponseEntity.ok(entity);
     }

@@ -13,14 +13,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vinayak.flight_status.api.notification.NotificationService;
+
 @RestController
 @RequestMapping("/flights")
 public class FlightController {
 
     private final FlightService flightService;
+    private final NotificationService notificationService;
 
-    public FlightController(FlightService flightService) {
+    public FlightController(FlightService flightService, NotificationService notificationService) {
         this.flightService = flightService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("")
@@ -76,6 +80,8 @@ public class FlightController {
         if(dbFlight == null){
             return ResponseEntity.internalServerError().build();
         }
+
+        notificationService.flightStatusUpdated(id, dbFlight.getFlightStatus());
 
         return ResponseEntity.ok().body(dbFlight);
     }
