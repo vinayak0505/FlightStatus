@@ -8,7 +8,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Message.Builder;
-import com.google.firebase.messaging.Notification;
 import com.vinayak.flight_status.api.flight.FlightStatus;
 import com.vinayak.flight_status.api.notification.NotificationType;
 
@@ -35,7 +34,7 @@ public class FirebaseService {
     public void sendFlightStatus(NotificationType notificationType,
             String topic, FlightStatus flightStatus, Integer flightId) {
         try {
-            System.out.println("Sending message to " + topic);
+            System.out.println("Sending message to " + notificationType.name());
             Builder messageBuilder = Message.builder()
                     .setTopic(topic)
                     .putData("topic", topic)
@@ -52,11 +51,8 @@ public class FirebaseService {
                     default -> {
                     }
                 }
-                messageBuilder.setNotification(
-                    Notification.builder()
-                    .setTitle("Your Flight Status Changed")
-                    .setBody(body)
-                    .build());
+
+                messageBuilder.putData("body", body).putData("title", "Your Flight Status Changed");
             }
 
             FirebaseMessaging.getInstance().send(messageBuilder.build());
