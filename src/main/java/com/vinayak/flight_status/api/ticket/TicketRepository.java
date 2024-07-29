@@ -11,5 +11,7 @@ public interface TicketRepository extends JpaRepository<Ticket, TicketCompositeK
     List<Ticket> findAllByUsersId(Integer id);
 
     List<Ticket> findAllByFlightId(Integer flightId);
+
+    List<TicketUserId> findAllDistinctUsersIdByFlightId(Integer flightId);
     
 }
