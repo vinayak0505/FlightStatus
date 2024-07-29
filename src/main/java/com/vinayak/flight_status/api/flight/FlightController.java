@@ -71,7 +71,6 @@ public class FlightController {
             return ResponseEntity.internalServerError().build();
         }
 
-        //TODO add a job
         notificationService.flightStatusUpdated(id, dbFlight.getFlightStatus());
 
         return ResponseEntity.ok().body(dbFlight);
@@ -85,7 +84,6 @@ public class FlightController {
             return ResponseEntity.internalServerError().build();
         }
 
-        //TODO add a job
         notificationService.flightGateUpdated(id, dbFlight.getGateNumber());
 
         return ResponseEntity.ok().body(dbFlight);

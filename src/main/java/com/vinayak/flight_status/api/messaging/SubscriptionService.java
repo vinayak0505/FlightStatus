@@ -10,6 +10,7 @@ import com.vinayak.flight_status.api.ticket.TicketService;
 
 @Service
 public class SubscriptionService {
+
     final private TicketService ticketService;
     final private FirebaseService firebaseService;
 
@@ -19,10 +20,15 @@ public class SubscriptionService {
     }
 
     public void unSubscribeAll(Notification notification) {
-        // TODO Auto-generated method stub
-        // get all tickets with unique flight id
-        // for each flight getNotificationToken
-        // throw new UnsupportedOperationException("Unimplemented method 'unSubscribeAll'");
+        try {
+            // get all tickets
+            List<Ticket> ticketsByUser = ticketService.getTicketsByUser(notification.getUserId());
+            ticketsByUser.forEach(action -> {
+                firebaseService.unSubscribe(Notification.getChannelName(action.getFlight().getId()), List.of(notification.getMessageToken()));
+            });
+            firebaseService.unSubscribe(Notification.getAllFlightChangeName(), List.of(notification.getMessageToken()));
+        } catch (Exception e) {
+        }
     }
 
     public void subscribeUserTokenToTickets(Notification notification) {
