@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.vinayak.flight_status.api.email.EmailService;
 import com.vinayak.flight_status.api.flight.FlightStatus;
 import com.vinayak.flight_status.api.messaging.FirebaseService;
 import com.vinayak.flight_status.api.messaging.SubscriptionService;
@@ -15,11 +16,13 @@ public class NotificationService {
     final private NotificationRepository notificationRepository;
     final private SubscriptionService subscriptionService;
     final private FirebaseService firebaseService;
+    final private EmailService emailService;
 
-    public NotificationService(NotificationRepository notificationRepository, SubscriptionService subscriptionService, FirebaseService firebaseService) {
+    public NotificationService(NotificationRepository notificationRepository, SubscriptionService subscriptionService, FirebaseService firebaseService, EmailService emailService) {
         this.notificationRepository = notificationRepository;
         this.subscriptionService = subscriptionService;
         this.firebaseService = firebaseService;
+        this.emailService = emailService;
     }
 
     public void saveMessagingToken(Integer userId, String firebase_token) {

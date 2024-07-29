@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.github.javafaker.Faker;
+import com.vinayak.flight_status.api.email.EmailDetails;
+import com.vinayak.flight_status.api.email.EmailService;
 import com.vinayak.flight_status.api.flight.Flight;
 import com.vinayak.flight_status.api.flight.FlightRepository;
 import com.vinayak.flight_status.api.ticket.Ticket;
@@ -80,6 +82,19 @@ public class FlightStatusApplication {
 
             usersRepository.save(users);
         };
+    }
+
+    // @Bean
+    @Autowired
+    public CommandLineRunner sendMessageTemp(EmailService emailService) {
+        return args -> emailService.sendSimpleMail(
+                EmailDetails
+                        .builder()
+                        .recipient("orendrasingh@gmail.com")
+                        .subject("Flight Status Changed")
+                        .msgBody("Flight on time. Don't forget to leave on time.")
+            .build()
+        );
     }
 
 }
