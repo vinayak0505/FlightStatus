@@ -12,8 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.github.javafaker.Faker;
-import com.vinayak.flight_status.api.email.EmailDetails;
-import com.vinayak.flight_status.api.email.EmailService;
 import com.vinayak.flight_status.api.flight.Flight;
 import com.vinayak.flight_status.api.flight.FlightRepository;
 import com.vinayak.flight_status.api.ticket.Ticket;

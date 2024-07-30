@@ -18,7 +18,4 @@ public class FirebaseProperties {
         return serviceAccount;
     }
 
-    public void setServiceAccount(Resource serviceAccount) {
-        this.serviceAccount = serviceAccount;
-    }
 }
