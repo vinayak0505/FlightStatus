@@ -1,7 +1,5 @@
 package com.vinayak.flight_status.api.flight;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +22,7 @@ public class FlightService {
         // calaender.setTime(now);
         // calaender.set(Calendar.DAY_OF_MONTH, 1);
         // return flightRepository.findAllByDepartureDateGreaterThanEqualOrderByDepartureDateAsc(calaender.getTime());
-        return flightRepository.findAll();
+        return flightRepository.findAllByOrderByCreatedAtDesc();
     }
 
     public Flight addFlight(Flight flight) {
