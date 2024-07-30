@@ -22,7 +22,6 @@ public class AuthController {
 
     @PostMapping("signup")
     public ResponseEntity<AuthenticationResponse> signup(@RequestBody AuthRequestDto authRequest) {
-        System.out.println(authRequest);
         AuthenticationResponse signup = authService.signup(authRequest.getUser());
 
         if (signup == null) {

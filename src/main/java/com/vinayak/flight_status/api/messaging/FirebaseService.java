@@ -15,7 +15,6 @@ import com.vinayak.flight_status.api.notification.NotificationType;
 public class FirebaseService {
 
     public void subscribe(String topic, List<String> registrationTokens) {
-        System.out.println("subscribing to " + topic);
         try {
             FirebaseMessaging.getInstance().subscribeToTopic(registrationTokens, topic);
         } catch (FirebaseMessagingException e) {
