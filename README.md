@@ -59,3 +59,7 @@ This Spring Boot application provides a flight booking platform with user authen
 
 ## Additional Notes
 Could consider using a separate service for notification handling, didnt created sepearete project for this becuase didnt know could use any technology, better solution would be to create a queue and host mail and notification there, but still here i am creating new thread for this.
+
+## Diagrams
+<img width="1280" alt="Screenshot 2024-07-30 at 6 50 55 PM" src="https://github.com/user-attachments/assets/19002570-5fa5-41e7-83de-be1f52f9ca6b">
+
