@@ -17,12 +17,14 @@ public class FlightService {
     }
 
     public List<Flight> getAllFlighs() {
-        var now = new Date();
-        //TODO remove and add new data;
-        Calendar calaender = Calendar.getInstance();
-        calaender.setTime(now);
-        calaender.set(Calendar.MONTH, 1);
-        return flightRepository.findAllByDepartureDateGreaterThanEqualOrderByDepartureDateAsc(calaender.getTime());
+        // we can get only the flights that will be on current month and after
+        // but because of lesst data commenting this code
+        // var now = new Date();
+        // Calendar calaender = Calendar.getInstance();
+        // calaender.setTime(now);
+        // calaender.set(Calendar.DAY_OF_MONTH, 1);
+        // return flightRepository.findAllByDepartureDateGreaterThanEqualOrderByDepartureDateAsc(calaender.getTime());
+        return flightRepository.findAll();
     }
 
     public Flight addFlight(Flight flight) {

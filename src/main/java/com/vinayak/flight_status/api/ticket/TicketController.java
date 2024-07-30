@@ -35,17 +35,17 @@ public class TicketController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Ticket>> getAllTicket(Principal principal) {
+    public ResponseEntity<List<TicketResponseDto>> getAllTicket(Principal principal) {
 
         String name = principal.getName();
         Users user = usersService.getUser(name);
 
         List<Ticket> tickets = ticketService.getTicketsByUser(user.getId());
-        return ResponseEntity.ok(tickets);
+        return ResponseEntity.ok(tickets.stream().map(TicketResponseDto::new).toList());
     }
 
     @PostMapping("")
-    public ResponseEntity<Ticket> buyTicket(@RequestBody BuyTicketRequestDto ticket, Principal principal) {
+    public ResponseEntity<TicketResponseDto> buyTicket(@RequestBody BuyTicketRequestDto ticket, Principal principal) {
         String name = principal.getName();
         Users user = usersService.getUser(name);
 
@@ -63,7 +63,7 @@ public class TicketController {
 
         notificationService.saveTicketToNotification(user.getId(), flight.get().getId());
         entity.setFlight(flight.get());
-        return ResponseEntity.ok(entity);
+        return ResponseEntity.ok(new TicketResponseDto(entity));
     }
 
     @GetMapping("flight/{id}")
