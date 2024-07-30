@@ -28,6 +28,8 @@ public class FlightStatusApplication {
         SpringApplication.run(FlightStatusApplication.class, args);
     }
 
+    // code to add dummy data to database
+    // adding bean will execute this code
     // @Bean
     @Autowired
     public CommandLineRunner dummyData(
@@ -73,18 +75,4 @@ public class FlightStatusApplication {
             }
         };
     }
-
-    // @Bean
-    @Autowired
-    public CommandLineRunner sendMessageTemp(EmailService emailService) {
-        return args -> emailService.sendSimpleMail(
-                EmailDetails
-                        .builder()
-                        .recipient("vinayakaggarwal@gmail.com")
-                        .subject("Flight Status Changed")
-                        .msgBody("Flight on time. Don't forget to leave on time.")
-                        .build()
-        );
-    }
-
 }

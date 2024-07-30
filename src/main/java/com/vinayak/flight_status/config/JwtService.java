@@ -20,11 +20,9 @@ import io.jsonwebtoken.security.Keys;
 public class JwtService {
 
     @Value("${application.security.jwt.secret-key}")
-    private String secretKey;
+    private String secretKey; // jwt encoder secretKey
     @Value("${application.security.jwt.expiration}")
-    private long jwtExpiration;
-    // @Value("${application.security.jwt.refresh-token.expiration}")
-    // private long refreshExpiration;
+    private long jwtExpiration; //time after which token will expire
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -47,12 +45,12 @@ public class JwtService {
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .setIssuedAt(new Date(System.currentTimeMillis())) // current time
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration)) // current timer + expiration time
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-
+    // checking if token is valid using email for username
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);

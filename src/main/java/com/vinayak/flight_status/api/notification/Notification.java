@@ -17,10 +17,12 @@ public class Notification {
 
     private Integer userId;
 
+    // channel name for sending notification
     public static String getChannelName(int flightId){
         return "flight_id_" + flightId;
     }
 
+    // channel name for sending notification
     public static String getAllFlightChangeName(){
         return "all_flights";
     }

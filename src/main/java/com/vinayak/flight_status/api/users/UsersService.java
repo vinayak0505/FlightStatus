@@ -16,7 +16,7 @@ public class UsersService {
     }
 
     public Users createUser(Users users) {
-        users.setEmail(users.getEmail().toLowerCase());
+        users.setEmail(users.getEmail().toLowerCase()); // setting all emails to lowercase
         return usersRepository.save(users);
     }
 

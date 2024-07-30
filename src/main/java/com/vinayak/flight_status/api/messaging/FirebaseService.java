@@ -14,6 +14,7 @@ import com.vinayak.flight_status.api.notification.NotificationType;
 @Service
 public class FirebaseService {
 
+    // subscribe user to a topic or channel
     public void subscribe(String topic, List<String> registrationTokens) {
         try {
             FirebaseMessaging.getInstance().subscribeToTopic(registrationTokens, topic);
@@ -22,6 +23,7 @@ public class FirebaseService {
         }
     }
 
+    // subscribe user to a topic or channel
     public void unSubscribe(String topic, List<String> registrationTokens) {
         try {
             FirebaseMessaging.getInstance().unsubscribeFromTopic(registrationTokens, topic);
@@ -30,6 +32,7 @@ public class FirebaseService {
         }
     }
 
+    // generating notification for flight status
     public void sendFlightStatus(NotificationType notificationType,
             String topic, FlightStatus flightStatus, Integer flightId) {
         try {
@@ -63,6 +66,7 @@ public class FirebaseService {
         }
     }
 
+    // generating notification for gate status
     public void sendFlightGate(NotificationType notificationType,
             String topic, String gate, Integer flightId) {
         try {

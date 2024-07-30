@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(TicketCompositeKey.class)
+@IdClass(TicketCompositeKey.class) // using filghtid, userId and seat number as composite key
 public class Ticket {
 
     public Ticket(BuyTicketRequestDto ticket, Integer userId) {
@@ -31,8 +31,8 @@ public class Ticket {
         this.seatNumber = ticket.getSeatNumber();
     }
 
-    @ManyToOne
     @Id
+    @ManyToOne
     private Flight flight;
 
     @Id

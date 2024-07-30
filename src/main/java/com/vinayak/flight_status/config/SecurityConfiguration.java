@@ -51,15 +51,14 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                .requestMatchers(WHITE_LIST_URL).permitAll()
-                .requestMatchers(GET, "/flights").permitAll()
-                .requestMatchers(PUT, "/flights/**").hasAuthority(UsersRole.ADMIN.name())
-                // .requestMatchers("/api/users/**").hasRole(UsersRole.ADMIN.name())
-                .anyRequest().authenticated()
+                .requestMatchers(WHITE_LIST_URL).permitAll()// all users can access white list
+                .requestMatchers(GET, "/flights").permitAll()// all users can get flights
+                .requestMatchers(PUT, "/flights/**").hasAuthority(UsersRole.ADMIN.name())// only admin can update flights
+                .anyRequest().authenticated()// all other requests require authentication
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))// session is set to STATELESS so every request is authenticated
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);// jawauth filter
 
         return http.build();
     }

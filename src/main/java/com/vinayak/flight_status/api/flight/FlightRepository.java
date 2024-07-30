@@ -12,5 +12,6 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
     // sort by departure date and should not be less then current date
     public List<Flight> findAllByDepartureDateGreaterThanEqualOrderByDepartureDateAsc(Date departureDate);
 
+    // get all flight order by created at
     public List<Flight> findAllByOrderByCreatedAtDesc();
 }

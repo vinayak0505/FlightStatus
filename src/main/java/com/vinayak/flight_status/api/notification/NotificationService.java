@@ -31,6 +31,9 @@ public class NotificationService {
         this.ticketRepository = ticketRepository;
     }
 
+    // saving messaging token or adding to token to channel
+    // added current device token to all the channels user must be in
+    // creating new thread to do in backgroud
     @Async
     public void saveMessagingToken(Integer userId, String firebase_token) {
         try {
@@ -55,6 +58,9 @@ public class NotificationService {
         }
     }
 
+    // saving messaging token or adding to token to channel
+    // getting all user previous token and subscribing to current filght 
+    // creating new thread to do in backgroud
     @Async
     public void saveTicketToNotification(Integer userId, Integer flightId) {
         // user have already saved messaging token while loggin in
@@ -68,6 +74,8 @@ public class NotificationService {
         }
     }
 
+    // sending notfication for status updated
+    // this task can take time to complete for large amount of data therefore added in background
     @Async
     public void flightStatusUpdated(Integer flightId, FlightStatus flightStatus) {
         try {
@@ -90,6 +98,8 @@ public class NotificationService {
         }
     }
 
+    // sending notfication for gate updated
+    // this task can take time to complete for large amount of data therefore added in background
     @Async
     public void flightGateUpdated(Integer flightId, String gateId) {
         try {

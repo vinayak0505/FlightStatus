@@ -14,9 +14,9 @@ public class FlightService {
         this.flightRepository = flightRepository;
     }
 
+    // we can get only the flights that will be on current month and after
+    // but because of lesst data commenting this code
     public List<Flight> getAllFlighs() {
-        // we can get only the flights that will be on current month and after
-        // but because of lesst data commenting this code
         // var now = new Date();
         // Calendar calaender = Calendar.getInstance();
         // calaender.setTime(now);
@@ -33,6 +33,7 @@ public class FlightService {
         return flightRepository.findById(id);
     }
 
+    // updating flight status and calling send notification thread
     public Flight updateFlight(Integer flightId, UpdateFlightStatusRequestDto updateFlight) {
         if (flightId == null || updateFlight == null || updateFlight.getFlightStatus() == null) {
             return null;
@@ -46,6 +47,7 @@ public class FlightService {
         return save;
     }
 
+    // updating gate status and calling send notification thread
     public Flight updateGate(Integer flightId, String gateId) {
         if (flightId == null || gateId == null) {
             return null;

@@ -9,21 +9,16 @@ public class FirebaseProperties {
 
     final private Resource serviceAccount;
 
+    // seting firepage key path variable
     public FirebaseProperties() {
         serviceAccount = new ClassPathResource("static/firebase-spring-key.json");
     }
 
-    /**
-     * @return the serviceAccount
-     */
     public Resource getServiceAccount() {
         return serviceAccount;
     }
 
-    // /**
-    //  * @param serviceAccount the serviceAccount to set
-    //  */
-    // public void setServiceAccount(Resource serviceAccount) {
-    //     this.serviceAccount = serviceAccount;
-    // }
+    public void setServiceAccount(Resource serviceAccount) {
+        this.serviceAccount = serviceAccount;
+    }
 }
