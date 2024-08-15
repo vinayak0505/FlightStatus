@@ -13,7 +13,7 @@ FROM amd64/openjdk:17
 # Set the working directory in the container
 WORKDIR /app
 # Copy the packaged jar file from the build stage
-COPY --from=build /app/target/*.jar app. jar 
+COPY --from=build /app/target/*.jar app.jar 
 COPY --from=build /app/env.properties env.properties
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
