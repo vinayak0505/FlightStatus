@@ -34,7 +34,6 @@ public class NotificationService {
     // saving messaging token or adding to token to channel
     // added current device token to all the channels user must be in
     // creating new thread to do in backgroud
-    @Async
     public void saveMessagingToken(Integer userId, String firebase_token) {
         try {
             Optional<Notification> byId = notificationRepository.findById(firebase_token);

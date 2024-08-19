@@ -6,19 +6,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.vinayak.flight_status.api.notification.NotificationService;
+import com.vinayak.flight_status.api.kafka.KafkaProducer;
+import com.vinayak.flight_status.api.notification.SaveMessagingTokenData;
+
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/auth")
+@AllArgsConstructor
 public class AuthController {
 
     final private AuthService authService;
-    final private NotificationService notificationService;
-
-    public AuthController(AuthService authService, NotificationService notificationService) {
-        this.authService = authService;
-        this.notificationService = notificationService;
-    }
+    final private KafkaProducer kafkaProducer;
 
     @PostMapping("signup")
     public ResponseEntity<AuthenticationResponse> signup(@RequestBody AuthRequestDto authRequest) {
@@ -29,7 +28,7 @@ public class AuthController {
         }
 
         if(authRequest.getFirebase_token() != null){
-            notificationService.saveMessagingToken(signup.getUser().getId(),authRequest.getFirebase_token());
+            kafkaProducer.sendSaveMessagingTokenData(SaveMessagingTokenData.builder().userId(signup.getUser().getId()).firebaseToken(authRequest.getFirebase_token()).build());
         }
 
         return ResponseEntity.ok(signup);
@@ -42,7 +41,7 @@ public class AuthController {
             return ResponseEntity.internalServerError().build();
         }
         if(authRequest.getFirebase_token() != null){
-            notificationService.saveMessagingToken(login.getUser().getId(),authRequest.getFirebase_token());
+            kafkaProducer.sendSaveMessagingTokenData(SaveMessagingTokenData.builder().userId(login.getUser().getId()).firebaseToken(authRequest.getFirebase_token()).build());
         }else{
 
         }
