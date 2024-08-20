@@ -16,6 +16,7 @@ public class KafkaConsumer {
 
     @KafkaListener(topics = "flight-messaging-token-data", groupId = "flight1")
     public void consumeSaveMessagingTokenData(SaveMessagingTokenData messagingTokenData) {
+        System.out.println("Consumed message: " + messagingTokenData.toString());
         notificationService.saveMessagingToken(messagingTokenData.getUserId(), messagingTokenData.getFirebaseToken());
     }
 }
