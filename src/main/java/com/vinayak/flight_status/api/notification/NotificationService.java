@@ -60,7 +60,6 @@ public class NotificationService {
     // saving messaging token or adding to token to channel
     // getting all user previous token and subscribing to current filght 
     // creating new thread to do in backgroud
-    @Async
     public void saveTicketToNotification(Integer userId, Integer flightId) {
         // user have already saved messaging token while loggin in
         // so no need here

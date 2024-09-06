@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vinayak.flight_status.api.flight.Flight;
 import com.vinayak.flight_status.api.flight.FlightService;
-import com.vinayak.flight_status.api.notification.NotificationService;
+import com.vinayak.flight_status.api.kafka.KafkaProducer;
 import com.vinayak.flight_status.api.users.Users;
 import com.vinayak.flight_status.api.users.UsersService;
 
@@ -25,13 +25,13 @@ public class TicketController {
     final private TicketService ticketService;
     final private UsersService usersService;
     final private FlightService flightService;
-    final private NotificationService notificationService;
+    final private KafkaProducer kafkaProducer;
 
-    public TicketController(TicketService ticketService, UsersService usersService, FlightService flightService, NotificationService notificationService) {
+    public TicketController(TicketService ticketService, UsersService usersService, FlightService flightService, KafkaProducer kafkaProducer) {
         this.ticketService = ticketService;
         this.usersService = usersService;
         this.flightService = flightService;
-        this.notificationService = notificationService;
+        this.kafkaProducer = kafkaProducer;
     }
 
     @GetMapping("")
@@ -60,8 +60,8 @@ public class TicketController {
         if (!flight.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-
-        notificationService.saveTicketToNotification(user.getId(), flight.get().getId());
+        // TODO testing
+        kafkaProducer.sendSaveTicketToNotification(SaveTicketToNotificationData.builder().userId(user.getId()).flightId(flight.get().getId()).build());
         entity.setFlight(flight.get());
         return ResponseEntity.ok(new TicketResponseDto(entity));
     }
